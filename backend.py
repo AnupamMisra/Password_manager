@@ -166,10 +166,9 @@ def fetch_pass(websit):
         print("Hey! That website's login credentials don't exist. Create one?") 
         return 2 
 
-def update_pass(website,url,user_id,choice,*v):
+def update_pass(i,website,url,user_id,choice,*v):
     try:
         if (r(f'select user_id from Storage where website="{website}"').iloc[0,0]!=""): 
-            i=input("Answer security question")
             if i=="okay":
                 #Send OTP
                 r(f'DELETE FROM Storage where website="{website}"')
@@ -223,12 +222,11 @@ def console():
         print("Please enter a valid choice") 
     print("_____________________________________________________________________________________________________________________________________________________________________")                                   
  
-def forgot_passwd(answer):
+def forgot_passwd(answer, passa):
     if(hashlib.sha224(answer.encode()).hexdigest()==gospel):
         #generate OTP?
-        nwp=input("Enter new password")
-        r(f'UPDATE Password set pwd="{nwp}"')
+        r(f'UPDATE Password set pwd="{passa}"')
         print("Password was changed")
-        _ = check_pwd(nwp)
+        _ = check_pwd(passa)
     
                     
