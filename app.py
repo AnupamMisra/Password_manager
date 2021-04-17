@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, flash,redirect
 from forms import RegistrationForm, LoginForm, Newcredentialssetup, Get_passwordform,reset_credsform,securityques
 import backend
-import pyperclip as pc
+#import pyperclip as pc
 import hashlib
 from flask_httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
