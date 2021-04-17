@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, flash,redirect
 from forms import RegistrationForm, LoginForm, Newcredentialssetup, Get_passwordform,reset_credsform,securityques
 import backend
-
+import pyperclip as pc
 import hashlib
 from flask_httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
@@ -58,10 +58,13 @@ def Newcredentials():
 def Get_password():
     form2 = Get_passwordform()
     if form2.validate_on_submit():
-        if backend.fetch_pass(form2.web.data)==1:
+        aa,passs=backend.fetch_pass(form2.web.data)
+        if aa==1:
+            print(passs)
+            pc.copy(passs)
             #flash("tEXT COPIED?","success")                #Doesn't work on time
             return redirect(url_for('console'))
-        elif backend.fetch_pass(form2.web.data)==2:    
+        elif aa==2:    
             #flash("doesn't exist","danger")                #Doesn't work on time
             return redirect(url_for('console'))
     return render_template('Get_password.html', title='Get_password', form=form2)

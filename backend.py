@@ -171,11 +171,12 @@ def insert_pass(website,url,user_id,choice,*v):
 def fetch_pass(websit):
     try:
         if(r(f'select user_id from Storage where website="{websit}"').iloc[0,0]!=""):
-            pc.copy(r(f'SELECT password from Storage where website="{websit}"').iloc[0,0])
-            return 1
+            #pc.copy(r(f'SELECT password from Storage where website="{websit}"').iloc[0,0])
+            jk = r(f'SELECT password from Storage where website="{websit}"').iloc[0,0]
+            return 1, jk
     except:
         print("Hey! That website's login credentials don't exist. Create one?") 
-        return 2 
+        return 2, "no" 
 
 def update_pass(i,website,url,user_id,choice,*v):
     try:
