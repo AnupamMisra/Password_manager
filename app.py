@@ -91,7 +91,7 @@ def forgot():
     #Call OTP generation function
 
     if form5.validate_on_submit():
-        backend.forgot_passwd(form5.answer.data, form5.otp.data, form5.p.data, form5.p2.data)
+        backend.forgot_passwd(form5.answer.data, form5.otp.data, form5.p.data)
         return redirect(url_for('login'))
     return render_template('forgotpass.html', title='Forgot password', form=form5)
 
