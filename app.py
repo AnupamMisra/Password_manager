@@ -74,8 +74,11 @@ def Get_password():
 @auth.login_required
 def Reset_credentials():        
     form3 = reset_credsform()
-    if form3.validate_on_submit():
-        backend.update_pass(form3.answer.data,form3.website.data, form3.URL.data, form3.username.data, form3.pwd_choice.data, form3.p.data)
+
+    #Call OTP generation function
+
+    if form3.validate_on_submit():        
+        backend.update_pass(form3.answer.data,form3.otp.data,form3.website.data, form3.URL.data, form3.username.data, form3.pwd_choice.data, form3.p.data)
         #flash("Resetted","success")
         return redirect(url_for('console'))
     return render_template('Reset_credentials.html', title='Reset_credentials', form=form3)
@@ -84,8 +87,11 @@ def Reset_credentials():
 @auth.login_required
 def forgot():
     form5=securityques()
+    
+    #Call OTP generation function
+
     if form5.validate_on_submit():
-        backend.forgot_passwd(form5.answer.data, form5.p.data)
+        backend.forgot_passwd(form5.answer.data, form5.otp.data, form5.p.data, form5.p2.data)
         return redirect(url_for('login'))
     return render_template('forgotpass.html', title='Forgot password', form=form5)
 
