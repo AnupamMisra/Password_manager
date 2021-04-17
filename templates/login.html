@@ -1,5 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
+    <script type="text/javascript">
+        function preventBack() {
+            window.history.forward(); 
+        }
+        
+        setTimeout("preventBack()", 0);
+        
+        window.onunload = function () { null };
+    </script>
     <div class="content-section">
         <form method="POST" action="">
             {{ form.hidden_tag() }}

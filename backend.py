@@ -11,6 +11,9 @@ passWord = 'EzCB9vazqz'      # place your own credentials here
 dbName =  'UDReedbczU'         # place your own credentials here
 DBConn= MySQLdb.connect(hostName,userName,passWord,dbName)
 
+user=hashlib.sha224("anupam".encode()).hexdigest()
+pw=hashlib.sha224("Raichu".encode()).hexdigest()
+
 def check_pwd(pwdd):
     pwd = r("SELECT pwd from Password").iloc[0,0]
     pwd_hash=hashlib.sha224(pwd.encode()).hexdigest()
@@ -19,6 +22,14 @@ def check_pwd(pwdd):
         return True
     else:
         return False  
+
+
+def check_user(a,b):
+    if (a==user): 
+        if (b==pw):
+            return 1
+    else: return 0
+
 
 def s224(msg):
     return hashlib.sha224(msg.encode()).hexdigest()
@@ -130,7 +141,7 @@ def hash(pp):
 
     r(f'UPDATE Counter SET ctr={ct}') #So that the next algorithm is used the next time
     _ =randomalpha()
-    passp = p[0:4] + _ + "*" + p[5:11] #returns hashed value
+    passp = p[0:14] + _ + "*" + p[15:29] #returns hashed value
     return passp
 
 def insert_pass(website,url,user_id,choice,*v):

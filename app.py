@@ -2,9 +2,21 @@ from flask import Flask, render_template, url_for, flash,redirect
 from forms import RegistrationForm, LoginForm, Newcredentialssetup, Get_passwordform,reset_credsform,securityques
 import backend
 
+import hashlib
+from flask_httpauth import HTTPBasicAuth
+auth = HTTPBasicAuth()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
+app.secret_key="1234"
+
+@auth.verify_password
+def f(a,b):
+    us=hashlib.sha224(a.encode()).hexdigest()
+    p=hashlib.sha224(b.encode()).hexdigest()
+
+    if backend.check_user(us,p):
+        return True
+    else: return False    
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -21,19 +33,18 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         if backend.check_pwd(form.password.data):
-            flash('You have been logged in!', 'success')
-            return redirect(url_for('console'))
-        else:
-            flash('Login Unsuccessful.', 'danger')
+            return redirect(url_for('console'))    
     return render_template('login.html', title='Login', form=form)
 
 #DONE!!!
 @app.route("/console")
+@auth.login_required
 def console():
     return render_template('console.html')
 
 
 @app.route("/console/Newcredentials", methods=['GET', 'POST'])
+@auth.login_required
 def Newcredentials():
     form1 = Newcredentialssetup()
     if form1.validate_on_submit():
@@ -43,6 +54,7 @@ def Newcredentials():
     return render_template('Newcredentials.html', title='Newcredentials', form=form1)
 
 @app.route("/console/Get_password", methods=['GET', 'POST'])
+@auth.login_required
 def Get_password():
     form2 = Get_passwordform()
     if form2.validate_on_submit():
@@ -55,6 +67,7 @@ def Get_password():
     return render_template('Get_password.html', title='Get_password', form=form2)
 
 @app.route("/console/Reset_credentials", methods=['GET', 'POST'])
+@auth.login_required
 def Reset_credentials():        
     form3 = reset_credsform()
     if form3.validate_on_submit():
@@ -64,6 +77,7 @@ def Reset_credentials():
     return render_template('Reset_credentials.html', title='Reset_credentials', form=form3)
 
 @app.route("/forgot", methods=['GET', 'POST'])
+@auth.login_required
 def forgot():
     form5=securityques()
     if form5.validate_on_submit():
@@ -74,4 +88,5 @@ def forgot():
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1',debug=True)
+
 

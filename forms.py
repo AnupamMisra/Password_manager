@@ -12,7 +12,7 @@ class RegistrationForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('What was the keyphrase given to you', validators=[DataRequired()])
     submit = SubmitField('Login')
 
 class Newcredentialssetup(FlaskForm):
