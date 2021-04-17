@@ -25,7 +25,7 @@ def check_pwd(pwdd):
 
 
 def check_user(a,b):
-    if (a==user): 
+    if (a==user):
         if (b==pw):
             return 1
     else: return 0

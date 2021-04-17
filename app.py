@@ -14,7 +14,7 @@ def f(a,b):
     us=hashlib.sha224(a.encode()).hexdigest()
     p=hashlib.sha224(b.encode()).hexdigest()
 
-    if backend.check_user(us,p):
+    if backend.check_user(us,p): 
         return True
     else: return False    
 
@@ -85,8 +85,8 @@ def forgot():
         return redirect(url_for('login'))
     return render_template('forgotpass.html', title='Forgot password', form=form5)
 
-
 if __name__ == '__main__':
     app.run(host='127.0.0.1',debug=True)
-
+    us=""
+    p=""
 
