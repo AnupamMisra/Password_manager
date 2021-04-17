@@ -29,6 +29,7 @@ def register():
 #DONE!!!
 @app.route("/",methods=['GET', 'POST'])
 @app.route("/login", methods=['GET', 'POST'])
+@auth.login_required
 def login():
     form = LoginForm()
     if form.validate_on_submit():
