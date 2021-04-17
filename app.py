@@ -61,12 +61,12 @@ def Get_password():
         aa,passs=backend.fetch_pass(form2.web.data)
         if aa==1:
             print(passs)
-            pc.copy(passs)
-            #flash("tEXT COPIED?","success")                #Doesn't work on time
-            return redirect(url_for('console'))
+            #pc.copy(passs)
+            flash(passs,"success")                #Doesn't work on time
+            return redirect(url_for('Get_password'))
         elif aa==2:    
-            #flash("doesn't exist","danger")                #Doesn't work on time
-            return redirect(url_for('console'))
+            flash("Doesn't exist","danger")                #Doesn't work on time
+            return redirect(url_for('Get_password'))
     return render_template('Get_password.html', title='Get_password', form=form2)
 
 @app.route("/console/Reset_credentials", methods=['GET', 'POST'])
