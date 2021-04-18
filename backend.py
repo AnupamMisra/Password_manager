@@ -183,8 +183,10 @@ def update_pass(i,otp,website,url,user_id,choice,*v):
                 #Send OTP
                 r(f'DELETE FROM Storage where website="{website}"')
                 insert_pass(website,url,user_id,choice,*v)
+                return 1
     except:
-        print(f"{website} doesn't exist.")                
+        print(f"{website} doesn't exist.")
+        return 0                
 
 def console():
 

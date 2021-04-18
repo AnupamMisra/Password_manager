@@ -78,9 +78,12 @@ def Reset_credentials():
     #Call OTP generation function
 
     if form3.validate_on_submit():        
-        backend.update_pass(form3.answer.data,form3.otp.data,form3.website.data, form3.URL.data, form3.username.data, form3.pwd_choice.data, form3.p.data)
-        #flash("Resetted","success")
-        return redirect(url_for('console'))
+        jh=backend.update_pass(form3.answer.data,form3.otp.data,form3.website.data, form3.URL.data, form3.username.data, form3.pwd_choice.data, form3.p.data)
+        if jh==1:
+            flash("Resetted","success")
+        elif jh==0:
+            flash("Doesn't exist","danger")
+        return redirect(url_for('Reset_credentials'))
     return render_template('Reset_credentials.html', title='Reset_credentials', form=form3)
 
 @app.route("/forgot", methods=['GET', 'POST'])
