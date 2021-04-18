@@ -167,7 +167,7 @@ def insert_pass(website,url,user_id,choice,*v):
         #Finally insert the password    
         r(f'INSERT into Storage(website,url,user_id,password) VALUES ("{website}","{url}","{user_id}","{z}") ')
         print("The password has been setup!")
-    return z
+        return z
 
 def fetch_pass(websit):
     try:
