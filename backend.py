@@ -167,6 +167,7 @@ def insert_pass(website,url,user_id,choice,*v):
         #Finally insert the password    
         r(f'INSERT into Storage(website,url,user_id,password) VALUES ("{website}","{url}","{user_id}","{z}") ')
         print("The password has been setup!")
+    return z
 
 def fetch_pass(websit):
     try:
@@ -179,7 +180,7 @@ def fetch_pass(websit):
         return 2, "no" 
 
 def update_pass(i,otp,website,url,user_id,choice,*v):
-#Validate OTP
+ #Validate OTP
 
     try:
         if (r(f'select user_id from Storage where website="{website}"').iloc[0,0]!=""): 

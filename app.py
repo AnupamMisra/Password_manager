@@ -49,9 +49,9 @@ def console():
 def Newcredentials():
     form1 = Newcredentialssetup()
     if form1.validate_on_submit():
-        backend.insert_pass(form1.website.data, form1.URL.data, form1.username.data, form1.pwd_choice.data, form1.p.data)
-        #flash("Data entered","success")                #Doesn't work on time
-        return redirect(url_for('console'))
+        p = backend.insert_pass(form1.website.data, form1.URL.data, form1.username.data, form1.pwd_choice.data, form1.p.data)
+        flash(p,"success")                #Doesn't work on time
+        return redirect(url_for('Newcredentials'))
     return render_template('Newcredentials.html', title='Newcredentials', form=form1)
 
 @app.route("/console/Get_password", methods=['GET', 'POST'])

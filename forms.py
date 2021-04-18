@@ -42,5 +42,5 @@ class securityques(FlaskForm):
     answer = StringField('Answer security question', validators=[DataRequired(), Length(min=2, max=200)])
     otp = IntegerField('Enter OTP', validators=[DataRequired(), Length(min=2, max=200)])
     p = PasswordField('Password', validators=[DataRequired()])
-    p2 = PasswordField('Password', validators=[DataRequired(),EqualTo('password')])
+    p2 = PasswordField('Forgot password', validators=[DataRequired(),EqualTo('password')])
     submit = SubmitField('Enter') 
