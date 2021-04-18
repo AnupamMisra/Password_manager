@@ -8,7 +8,7 @@ import pandas as pd
 hostName = 'remotemysql.com'   # place your own credentials here
 userName = 'UDReedbczU'      # place your own credentials here
 passWord = 'EzCB9vazqz'      # place your own credentials here
-dbName =  'UDReedbczU'         # place your own credentials here
+dbName =  userName         # place your own credentials here
 DBConn= MySQLdb.connect(hostName,userName,passWord,dbName)
 
 user=hashlib.sha224("anupam".encode()).hexdigest()
@@ -23,17 +23,12 @@ def check_pwd(pwdd):
     else:
         return False  
 
-
 def check_user(a,b):
     if (a==user):
         if (b==pw):
             return 1
     else: return 0
-
-
-def s224(msg):
-    return hashlib.sha224(msg.encode()).hexdigest()
-    
+  
 def s224(msg):
     return hashlib.sha224(msg.encode()).hexdigest()
 
