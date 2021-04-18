@@ -5,10 +5,10 @@ import hashlib
 import time
 import pandas as pd
 
-hostName = 'remotemysql.com'   # place your own credentials here
-userName = 'UDReedbczU'      # place your own credentials here
-passWord = 'EzCB9vazqz'      # place your own credentials here
-dbName =  userName         # place your own credentials here
+hostName = 'remotemysql.com'      # place your own credentials here
+userName = 'UDReedbczU'           # place your own credentials here
+passWord = 'EzCB9vazqz'           # place your own credentials here
+dbName =  userName                # place your own credentials here
 DBConn= MySQLdb.connect(hostName,userName,passWord,dbName)
 
 user=hashlib.sha224("anupam".encode()).hexdigest()
