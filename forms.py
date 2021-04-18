@@ -30,7 +30,7 @@ class Get_passwordform(FlaskForm):
 class reset_credsform(FlaskForm):
 
     answer = StringField('Answer security question', validators=[DataRequired(), Length(min=2, max=200)])
-    otp = IntegerField('Enter OTP', validators=[DataRequired(), Length(min=2, max=20)])
+    otp = IntegerField('Enter OTP', validators=[DataRequired()])
     website = StringField('Website', validators=[DataRequired(), Length(min=2, max=20)])
     URL = StringField('url', validators=[DataRequired()]) #URL validation required later
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
