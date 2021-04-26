@@ -1,13 +1,21 @@
 from flask import Flask, render_template, url_for, flash,redirect
 from forms import RegistrationForm, LoginForm, Newcredentialssetup, Get_passwordform,reset_credsform,securityques
+from secure import SecureHeaders
 import backend
 #import pyperclip as pc
 import hashlib
 from flask_httpauth import HTTPBasicAuth
+
+sc=SecureHeaders(csp=True, hsts=False,xfo='Deny')
 auth = HTTPBasicAuth()
 
 app = Flask(__name__)
 app.secret_key="1234"
+
+@app.after_request
+def set_secure_headers(response):
+    sc.flask(response)
+    return response
 
 @auth.verify_password
 def f(a,b):
