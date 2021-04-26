@@ -5,19 +5,13 @@ import backend
 #import pyperclip as pc
 import hashlib
 from flask_httpauth import HTTPBasicAuth
-
-sc=SecureHeaders(csp=True, hsts=False,xfo='Deny')
+from flask_sslify import SSLify
+sc=SecureHeaders(csp=True, hsts=True,xfo='Deny')
 auth = HTTPBasicAuth()
 
 app = Flask(__name__)
 app.secret_key="1234"
-
-@app.before_request
-def before_request():
-    if request.url.startswith('http://'):
-        url = request.url.replace('http://', 'https://', 1)
-        code = 301
-        return redirect(url, code=code)
+sslify = SSLify(app)
 
 @app.after_request
 def set_secure_headers(response):
@@ -114,7 +108,7 @@ def forgot():
     return render_template('forgotpass.html', title='Forgot password', form=form5)
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1',debug=True)
+    app.run(host='127.0.0.1',debug=False)
     us=""
     p=""
 
