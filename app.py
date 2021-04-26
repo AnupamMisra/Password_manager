@@ -12,6 +12,13 @@ auth = HTTPBasicAuth()
 app = Flask(__name__)
 app.secret_key="1234"
 
+@app.before_request
+def before_request():
+    if request.url.startswith('http://'):
+        url = request.url.replace('http://', 'https://', 1)
+        code = 301
+        return redirect(url, code=code)
+
 @app.after_request
 def set_secure_headers(response):
     sc.flask(response)
