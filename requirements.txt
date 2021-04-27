@@ -28,3 +28,4 @@ scipy>=0.15.1
 PyQt5==5.15.4
 Flask-HTTPAuth==4.2.0
 secure==0.2.1
+flask_sslify==0.1.5
