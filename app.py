@@ -1,11 +1,3 @@
-!pip install twilio
-import random 
-import twilio
-import os
-from twilio.rest import Client
-#(650) 524-5430
-#Your new Phone Number is +16505245430
-
 from flask import Flask, render_template, url_for, flash,redirect
 from forms import RegistrationForm, LoginForm, Newcredentialssetup, Get_passwordform,reset_credsform,securityques
 from secure import SecureHeaders

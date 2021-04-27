@@ -1,4 +1,3 @@
-!pip install twilio
 import random 
 import twilio
 import os
@@ -255,7 +254,7 @@ def forgot_passwd(answer, otp, passa,otp_generated):
 def generateOTP():
     otp_generated = random.randint(1000,9999)
 
-    reutrn otp_generated
+    return otp_generated
     
     
 def SendOTP(otp_generated):
