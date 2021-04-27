@@ -1,3 +1,10 @@
+!pip install twilio
+import random 
+import twilio
+import os
+from twilio.rest import Client
+#(650) 524-5430
+#Your new Phone Number is +16505245430
 import MySQLdb
 import pyperclip as pc
 import random   
@@ -175,16 +182,17 @@ def fetch_pass(websit):
         print("Hey! That website's login credentials don't exist. Create one?") 
         return 2, "no" 
 
-def update_pass(i,otp,website,url,user_id,choice,*v):
+def update_pass(i,otp,website,url,user_id,choice,otp_generated,*v):
  #Validate OTP
 
     try:
-        if (r(f'select user_id from Storage where website="{website}"').iloc[0,0]!=""): 
-            if i=="okay":
-                #Send OTP
-                r(f'DELETE FROM Storage where website="{website}"')
-                insert_pass(website,url,user_id,choice,*v)
-                return 1
+        if(otp == otp_generated):
+            if (r(f'select user_id from Storage where website="{website}"').iloc[0,0]!=""): 
+                if i=="okay":
+                    #Send OTP
+                    r(f'DELETE FROM Storage where website="{website}"')
+                    insert_pass(website,url,user_id,choice,*v)
+                    return 1
     except:
         print(f"{website} doesn't exist.")
         return 0                
@@ -235,12 +243,32 @@ def console():
         print("Please enter a valid choice") 
     print("_____________________________________________________________________________________________________________________________________________________________________")                                   
  
-def forgot_passwd(answer, otp, passa):
+def forgot_passwd(answer, otp, passa,otp_generated):
     #Validate OTP
     #gospel is the security answer
-    if(hashlib.sha224(answer.encode()).hexdigest()==gospel):
-        r(f'UPDATE Password set pwd="{passa}"')
-        print("Password was changed")
-        _ = check_pwd(passa)
+    if(otp == otp_generated):
+        if(hashlib.sha224(answer.encode()).hexdigest()==gospel):
+            r(f'UPDATE Password set pwd="{passa}"')
+            print("Password was changed")
+            _ = check_pwd(passa)
+
+def generateOTP():
+    otp_generated = random.randint(1000,9999)
+
+    reutrn otp_generated
     
+    
+def SendOTP(otp_generated):
+    account_sid = 'AC3a8725c1a7dbfd4e2844003377e02664'
+    auth_token = '5f6457c556c0d95de0c2acb463fe2c3c'
+    client = Client(account_sid, auth_token)
+
+    
+    To_number = +919784631904
+    Message = 'Your OTP for account verification is '+str(otp_generated)
+
+
+    message = client.messages.create(body=Message,from_='+16505245430',to=To_number)
+
+    print(message.sid)
                     
