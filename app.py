@@ -7,7 +7,6 @@ from flask_httpauth import HTTPBasicAuth
 from flask_sslify import SSLify
 #sc=SecureHeaders(csp=True, hsts=True,xfo='Deny')
 auth = HTTPBasicAuth()
-
 app = Flask(__name__)
 app.secret_key="1234"
 '''
@@ -78,25 +77,40 @@ def Get_password():
             return redirect(url_for('Get_password'))
     return render_template('Get_password.html', title='Get_password', form=form2)
 
+def otpwala():
+    otp_g = backend.generateOTP()
+    backend.SendOTP(otp_g)
+    otp_g = int(otp_g)
+    print(otp_g)    
+    return otp_g
+
+
 @app.route("/console/Reset_credentials", methods=['GET', 'POST'])
 @auth.login_required
 def Reset_credentials():  
-         
-    otp_g = backend.generateOTP()
-    backend.SendOTP(otp_g)
-    form3 = reset_credsform()
-    otp_g = int(otp_g)
-    print(otp_g)    
-    #Call OTP generation function
 
-    if form3.validate_on_submit():        
-        jh=backend.update_pass(form3.answer.data,otp_g,form3.website.data,2,form3.otp.data)
+    otp_g = otpwala()
+    form3 = reset_credsform()
+    #Call OTP generation function
+    print('main reset')
+    if form3.validate_on_submit():    
+        print('if form validates')
+        print('after form validates and before it goes for checking', backend.counter)
+        jh=backend.update_pass(form3.answer.data,backend.counter,form3.website.data,2,form3.otp.data)
         if jh==1:
-           # flash("Resetted","success")
+            print('if form validates')
+            flash("Resetted","success")
         elif jh==0:
-            #flash("Doesn't exist","danger")
+            print('if form does not validate')
+            flash("Doesn't exist","danger")
+        print('inside validate form again' )    
         return redirect(url_for('Reset_credentials'))
+        print('after page refreshes')
+    print('last position before exiting')
+    backend.counter=otp_g
+    print(backend.counter)
     return render_template('Reset_credentials.html', title='Reset_credentials', form=form3)
+print('outside reset function')
 
 @app.route("/forgot", methods=['GET', 'POST'])
 @auth.login_required
@@ -117,6 +131,7 @@ def logout():
     return "You have been logged out successfully", 401
             
 if __name__ == '__main__':
+
     app.run(host='127.0.0.1',debug=False)
     us=""
     p=""
