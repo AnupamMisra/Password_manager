@@ -82,14 +82,14 @@ def Get_password():
 @app.route("/console/Reset_credentials", methods=['GET', 'POST'])
 @auth.login_required
 def Reset_credentials():        
-    form3 = reset_credsform()
-
     otp_g = backend.generateOTP()
     backend.SendOTP(otp_g)
+    form3 = reset_credsform()
+
     #Call OTP generation function
 
     if form3.validate_on_submit():        
-        jh=backend.update_pass(form3.answer.data,form3.otp.data,form3.website.data, form3.URL.data, form3.username.data, form3.pwd_choice.data,otp_g, form3.p.data)
+        jh=backend.update_pass(form3.answer.data,form3.otp.data,form3.website.data, form3.URL.data, form3.username.data, form3.pwd_choice.data,form3.otp.data, form3.p.data)
         if jh==1:
             flash("Resetted","success")
         elif jh==0:
@@ -107,7 +107,7 @@ def forgot():
     #Call OTP generation function
 
     if form5.validate_on_submit():
-        backend.forgot_passwd(form5.answer.data, form5.otp.data, form5.p.data,otp_g)
+        backend.forgot_passwd(form5.answer.data, form5.otp.data, form5.p.data,form5.otp.data)
         return redirect(url_for('login'))
     return render_template('forgotpass.html', title='Forgot password', form=form5)
 
