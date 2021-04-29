@@ -259,7 +259,7 @@ def generateOTP():
     
 def SendOTP(otp_generated):
     account_sid = 'AC3a8725c1a7dbfd4e2844003377e02664'
-    auth_token = '5f6457c556c0d95de0c2acb463fe2c3c'
+    auth_token = 'a000e6601cae7c319852c5790e5f8fa1'
     client = Client(account_sid, auth_token)
 
     
