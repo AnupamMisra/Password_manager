@@ -40,7 +40,7 @@ class reset_credsform(FlaskForm):
 
 class securityques(FlaskForm):
     answer = StringField('Answer security question', validators=[DataRequired(), Length(min=2, max=200)])
-    otp = IntegerField('Enter OTP', validators=[DataRequired(), Length(min=2, max=200)])
-    p = PasswordField('Password', validators=[DataRequired()])
-    p2 = PasswordField('Forgot password', validators=[DataRequired(),EqualTo('password')])
+    otp = IntegerField('Enter OTP', validators=[DataRequired()])
+    p = PasswordField('New password', validators=[DataRequired()])
+    p2 = PasswordField('Confim password', validators=[DataRequired(),EqualTo('p')])
     submit = SubmitField('Enter') 

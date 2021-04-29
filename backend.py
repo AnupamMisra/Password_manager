@@ -259,11 +259,11 @@ def generateOTP():
     
 def SendOTP(otp_generated):
     account_sid = 'AC3a8725c1a7dbfd4e2844003377e02664'
-    auth_token = 'a000e6601cae7c319852c5790e5f8fa1'
+    auth_token = 'd083bdf2568af152ae1edf565138877f'
     client = Client(account_sid, auth_token)
 
     
-    To_number = +919784631904
+    To_number = '+919784631904'
     Message = 'Your OTP for account verification is '+str(otp_generated)
 
 
