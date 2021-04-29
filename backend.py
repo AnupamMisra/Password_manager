@@ -11,7 +11,7 @@ import hashlib
 import time
 
 import pandas as pd
-counter=0
+oldotp=0
 
 hostName = 'remotemysql.com'      # place your own credentials here
 userName = 'UDReedbczU'           # place your own credentials here

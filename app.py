@@ -96,7 +96,7 @@ def Reset_credentials():
     if form3.validate_on_submit():    
         print('if form validates')
         print('after form validates and before it goes for checking', backend.counter)
-        jh=backend.update_pass(form3.answer.data,backend.counter,form3.website.data,2,form3.otp.data)
+        jh=backend.update_pass(form3.answer.data,backend.oldotp,form3.website.data,2,form3.otp.data)
         if jh==1:
             print('if form validates')
             flash("Resetted","success")
@@ -107,8 +107,8 @@ def Reset_credentials():
         return redirect(url_for('Reset_credentials'))
         print('after page refreshes')
     print('last position before exiting')
-    backend.counter=otp_g
-    print(backend.counter)
+    backend.oldotp=otp_g
+    print(backend.oldotp)
     return render_template('Reset_credentials.html', title='Reset_credentials', form=form3)
 print('outside reset function')
 
@@ -116,14 +116,13 @@ print('outside reset function')
 @auth.login_required
 def forgot():
     form5=securityques()
-
-    otp_g = backend.generateOTP()
-    backend.SendOTP(otp_g)
+    otp_g = otpwala()
     #Call OTP generation function
 
     if form5.validate_on_submit():
-        backend.forgot_passwd(form5.answer.data, otp_g, form5.p.data,2, form5.otp.data)
+        backend.forgot_passwd(form5.answer.data, backend.oldotp, form5.p.data,2, form5.otp.data)
         return redirect(url_for('login'))
+    backend.oldotp=otp_g
     return render_template('forgotpass.html', title='Forgot password', form=form5)
 
 @app.route('/logout')
