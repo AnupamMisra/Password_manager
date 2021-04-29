@@ -181,7 +181,7 @@ def fetch_pass(websit):
         print("Hey! That website's login credentials don't exist. Create one?") 
         return 2, "no" 
 
-def update_pass(i,otp,website,url,user_id,choice,otp_generated,*v):
+def update_pass(i,otp,website,choice=2,otp_generated,*v):
  #Validate OTP
 
     try:
