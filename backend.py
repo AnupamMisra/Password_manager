@@ -11,6 +11,7 @@ import hashlib
 import time
 
 import pandas as pd
+counter=0
 
 hostName = 'remotemysql.com'      # place your own credentials here
 userName = 'UDReedbczU'           # place your own credentials here
@@ -78,6 +79,9 @@ def s3_224(msg):
 def shak_256(msg):
     return hashlib.shake_256(msg.encode()).hexdigest()    
 
+
+
+
 def runCMD (DDL):
     DBConn= MySQLdb.connect(hostName,userName,passWord,dbName)
     myCursor = DBConn.cursor()
@@ -103,22 +107,20 @@ def r(msg):
 r("DROP TABLE IF EXISTS Storage")
 r("CREATE TABLE Storage( \
 website varchar(70) not null, \
-url varchar(70) not null primary key, \
-user_id varchar(70) not null, \
 password varchar(70) not null)")
-'''
 
-'''
+
+
 r("DROP TABLE IF EXISTS Counter")
 r("CREATE TABLE Counter(ctr INT not null)")
 r("INSERT INTO Counter(ctr) VALUES(1)")
-'''
-'''
+
+
 r("DROP TABLE IF EXISTS Password")
 r("CREATE TABLE Password(pwd varchar(50) not null)")
 r('INSERT INTO Password(pwd) VALUES("Pikachu")')
-'''
 
+'''
 pwd = ""
 gospel=hashlib.sha224("okay".encode()).hexdigest()
 
@@ -146,9 +148,9 @@ def hash(pp):
     passp = p[0:14] + _ + "*" + p[15:29] #returns hashed value
     return passp
 
-def insert_pass(website,url,user_id,choice,*v):
+def insert_pass(website,choice=2):
     try:
-        if (r(f'select user_id from Storage where website="{website}"').iloc[0,0]!=""):   
+        if (r(f'select website from Storage where website="{website}"').iloc[0,0]!=""):   
             print("Stop, it already exists")
 
     except:
@@ -167,13 +169,13 @@ def insert_pass(website,url,user_id,choice,*v):
         else:
             print("Wrong choice Padawan")    
         #Finally insert the password    
-        r(f'INSERT into Storage(website,url,user_id,password) VALUES ("{website}","{url}","{user_id}","{z}") ')
+        r(f'INSERT into Storage(website,password) VALUES ("{website}","{z}")')
         print("The password has been setup!")
         return z
 
 def fetch_pass(websit):
     try:
-        if(r(f'select user_id from Storage where website="{websit}"').iloc[0,0]!=""):
+        if(r(f'select website from Storage where website="{websit}"').iloc[0,0]!=""):
             #pc.copy(r(f'SELECT password from Storage where website="{websit}"').iloc[0,0])
             jk = r(f'SELECT password from Storage where website="{websit}"').iloc[0,0]
             return 1, jk
@@ -181,21 +183,22 @@ def fetch_pass(websit):
         print("Hey! That website's login credentials don't exist. Create one?") 
         return 2, "no" 
 
-def update_pass(i,otp,website,choice=2,otp_generated,*v):
- #Validate OTP
-
+def update_pass(i,otp,website,choice,otp_generated):
+#Validate OTP
     try:
+        print(f"Checking OTP, ({otp}), ({otp_generated})")
         if(otp == otp_generated):
-            if (r(f'select user_id from Storage where website="{website}"').iloc[0,0]!=""): 
+            print("OTP and OTP generated matches")
+            if (r(f'select website from Storage where website="{website}"').iloc[0,0]!=""): 
                 if i=="okay":
                     #Send OTP
                     r(f'DELETE FROM Storage where website="{website}"')
-                    insert_pass(website,url,user_id,choice,*v)
+                    insert_pass(website)
                     return 1
     except:
         print(f"{website} doesn't exist.")
         return 0                
-
+'''
 def console():
 
     print("\t\t\t\t\t\t\t\t\t PASSWORD MANAGER ")
@@ -241,7 +244,7 @@ def console():
     else:
         print("Please enter a valid choice") 
     print("_____________________________________________________________________________________________________________________________________________________________________")                                   
- 
+'''
 def forgot_passwd(answer, otp, passa,otp_generated):
     #Validate OTP
     #gospel is the security answer
@@ -255,8 +258,7 @@ def generateOTP():
     otp_generated = random.randint(1000,9999)
 
     return otp_generated
-    
-    
+        
 def SendOTP(otp_generated):
     account_sid = 'AC3a8725c1a7dbfd4e2844003377e02664'
     auth_token = 'd083bdf2568af152ae1edf565138877f'

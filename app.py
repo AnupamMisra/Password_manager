@@ -5,17 +5,18 @@ import backend
 import hashlib
 from flask_httpauth import HTTPBasicAuth
 from flask_sslify import SSLify
-sc=SecureHeaders(csp=True, hsts=True,xfo='Deny')
+#sc=SecureHeaders(csp=True, hsts=True,xfo='Deny')
 auth = HTTPBasicAuth()
 
 app = Flask(__name__)
 app.secret_key="1234"
+'''
 sslify = SSLify(app)
 @app.after_request
 def set_secure_headers(response):
     sc.flask(response)
     return response
-
+'''
 @auth.verify_password
 def f(a,b):
     us=hashlib.sha224(a.encode()).hexdigest()
@@ -57,7 +58,7 @@ def Newcredentials():
     form1 = Newcredentialssetup()
     if form1.validate_on_submit():
         p = backend.insert_pass(form1.website.data)
-        flash(p,"success")                #Doesn't work on time
+        flash(p,"success")
         return redirect(url_for('Newcredentials'))
     return render_template('Newcredentials.html', title='Newcredentials', form=form1)
 
@@ -79,19 +80,21 @@ def Get_password():
 
 @app.route("/console/Reset_credentials", methods=['GET', 'POST'])
 @auth.login_required
-def Reset_credentials():        
+def Reset_credentials():  
+         
     otp_g = backend.generateOTP()
     backend.SendOTP(otp_g)
     form3 = reset_credsform()
-
+    otp_g = int(otp_g)
+    print(otp_g)    
     #Call OTP generation function
 
     if form3.validate_on_submit():        
-        jh=backend.update_pass(form3.answer.data,form3.otp.data,form3.website.data)
+        jh=backend.update_pass(form3.answer.data,otp_g,form3.website.data,2,form3.otp.data)
         if jh==1:
-            flash("Resetted","success")
+           # flash("Resetted","success")
         elif jh==0:
-            flash("Doesn't exist","danger")
+            #flash("Doesn't exist","danger")
         return redirect(url_for('Reset_credentials'))
     return render_template('Reset_credentials.html', title='Reset_credentials', form=form3)
 
@@ -105,7 +108,7 @@ def forgot():
     #Call OTP generation function
 
     if form5.validate_on_submit():
-        backend.forgot_passwd(form5.answer.data, form5.otp.data, form5.p.data,form5.otp.data)
+        backend.forgot_passwd(form5.answer.data, otp_g, form5.p.data,2, form5.otp.data)
         return redirect(url_for('login'))
     return render_template('forgotpass.html', title='Forgot password', form=form5)
 
