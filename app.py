@@ -56,7 +56,7 @@ def console():
 def Newcredentials():
     form1 = Newcredentialssetup()
     if form1.validate_on_submit():
-        p = backend.insert_pass(form1.website.data, form1.URL.data, form1.username.data, form1.pwd_choice.data, form1.p.data)
+        p = backend.insert_pass(form1.website.data)
         flash(p,"success")                #Doesn't work on time
         return redirect(url_for('Newcredentials'))
     return render_template('Newcredentials.html', title='Newcredentials', form=form1)
@@ -87,7 +87,7 @@ def Reset_credentials():
     #Call OTP generation function
 
     if form3.validate_on_submit():        
-        jh=backend.update_pass(form3.answer.data,form3.otp.data,form3.website.data, form3.URL.data, form3.username.data, form3.pwd_choice.data,form3.otp.data, form3.p.data)
+        jh=backend.update_pass(form3.answer.data,form3.otp.data,form3.website.data)
         if jh==1:
             flash("Resetted","success")
         elif jh==0:

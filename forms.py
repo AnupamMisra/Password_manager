@@ -10,17 +10,12 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password',  validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Sign Up')
 
-
 class LoginForm(FlaskForm):
     password = PasswordField('What was the keyphrase given to you', validators=[DataRequired()])
     submit = SubmitField('Login')
 
 class Newcredentialssetup(FlaskForm):
     website = StringField('Website', validators=[DataRequired(), Length(min=2, max=20)])
-    URL = StringField('url', validators=[DataRequired()]) #URL validation required later
-    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
-    pwd_choice = IntegerField('Password setup choice', validators=[AnyOf([1,2])])
-    p = PasswordField('Password')
     submit = SubmitField('Set')   
 
 class Get_passwordform(FlaskForm):
@@ -32,10 +27,6 @@ class reset_credsform(FlaskForm):
     answer = StringField('Answer security question', validators=[DataRequired(), Length(min=2, max=200)])
     otp = IntegerField('Enter OTP', validators=[DataRequired()])
     website = StringField('Website', validators=[DataRequired(), Length(min=2, max=20)])
-    URL = StringField('url', validators=[DataRequired()]) #URL validation required later
-    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
-    pwd_choice = IntegerField('Password setup choice', validators=[AnyOf([1,2])])
-    p = PasswordField('Password')
     submit = SubmitField('Reset') 
 
 class securityques(FlaskForm):
