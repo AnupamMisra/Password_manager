@@ -5,16 +5,17 @@ import backend
 import hashlib
 from flask_httpauth import HTTPBasicAuth
 from flask_sslify import SSLify
-sc=SecureHeaders(csp=True, hsts=True,xfo='Deny')
+#sc=SecureHeaders(csp=True, hsts=True,xfo='Deny')
 auth = HTTPBasicAuth()
 app = Flask(__name__)
 app.secret_key="1234"
-
+'''
 sslify = SSLify(app)
 @app.after_request
 def set_secure_headers(response):
     sc.flask(response)
     return response
+'''
 
 @auth.verify_password
 def f(a,b):
@@ -24,16 +25,15 @@ def f(a,b):
     if backend.check_user(us,p): 
         return True
     else: return False    
-
-
+'''
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     formx = RegistrationForm()
     if formx.validate_on_submit():
         flash(f'Account created for {formx.username.data}!', 'success')
     return render_template('register.html', title='Register', form=formx)
+'''
 
-#DONE!!!
 @app.route("/",methods=['GET', 'POST'])
 @app.route("/login", methods=['GET', 'POST'])
 @auth.login_required
@@ -52,7 +52,6 @@ def login():
 def console():
     return render_template('console.html')
 
-
 @app.route("/console/Newcredentials", methods=['GET', 'POST'])
 @auth.login_required
 def Newcredentials():
@@ -63,7 +62,7 @@ def Newcredentials():
         if status==1:
             flash("It already exists!","danger")
         elif status==2:
-            flash(f"Password generated:{p}", "success")
+            flash(f"Password generated: {p}", "success")
 
         return redirect(url_for('Newcredentials'))
     return render_template('Newcredentials.html', title='Newcredentials', form=form1)
@@ -90,7 +89,6 @@ def otpwala():
     otp_g = int(otp_g)
     print(otp_g)    
     return otp_g
-
 
 @app.route("/console/Reset_credentials", methods=['GET', 'POST'])
 @auth.login_required
@@ -127,9 +125,9 @@ def forgot():
     #Call OTP generation function
 
     if form5.validate_on_submit():
-        backend.forgot_passwd(form5.answer.data, backend.oldotp, form5.p.data,2, form5.otp.data)
+        backend.forgot_passwd(form5.answer.data, backend.oldotp,form5.p.data, form5.otp.data)
         return redirect(url_for('login'))
-    backend.oldotp=otp_g
+    backend.oldotp = otp_g
     return render_template('forgotpass.html', title='Forgot password', form=form5)
 
 @app.route('/logout')

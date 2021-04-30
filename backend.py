@@ -2,25 +2,24 @@ import random
 import twilio
 import os
 from twilio.rest import Client
-#(650) 524-5430
-#Your new Phone Number is +16505245430
 import MySQLdb
 import pyperclip as pc
-import random   
 import hashlib
 import time
-
 import pandas as pd
 oldotp=0
 
-hostName = 'remotemysql.com'      # place your own credentials here
-userName = 'UDReedbczU'           # place your own credentials here
-passWord = 'EzCB9vazqz'           # place your own credentials here
-dbName =  userName                # place your own credentials here
+hostName = 'remotemysql.com'      
+userName = 'UDReedbczU'          
+passWord = 'EzCB9vazqz'           
+dbName =  userName                
 DBConn= MySQLdb.connect(hostName,userName,passWord,dbName)
 
 user=hashlib.sha224("anupam".encode()).hexdigest()
 pw=hashlib.sha224("Raichu".encode()).hexdigest()
+
+#(650) 524-5430
+#Your new Phone Number is +16505245430
 
 def check_pwd(pwdd):
     pwd = r("SELECT pwd from Password").iloc[0,0]
@@ -64,8 +63,9 @@ def blak_2s(msg):
 def blak_2b(msg):
     return hashlib.blake2b(msg.encode()).hexdigest()
 
-def s3_384(msg):
+def s3_384(msg): #msg='anupam'
     return hashlib.sha3_384(msg.encode()).hexdigest()
+    #return  asfsfqwfasd7a8sdfadfja9sdf79q23fhq23fh34r2n3rf3h4
 
 def s3_512(msg):
     return hashlib.sha3_512(msg.encode()).hexdigest()
@@ -78,9 +78,6 @@ def s3_224(msg):
 
 def shak_256(msg):
     return hashlib.shake_256(msg.encode()).hexdigest()    
-
-
-
 
 def runCMD (DDL):
     DBConn= MySQLdb.connect(hostName,userName,passWord,dbName)
@@ -109,12 +106,9 @@ r("CREATE TABLE Storage( \
 website varchar(70) not null, \
 password varchar(70) not null)")
 
-
-
 r("DROP TABLE IF EXISTS Counter")
 r("CREATE TABLE Counter(ctr INT not null)")
 r("INSERT INTO Counter(ctr) VALUES(1)")
-
 
 r("DROP TABLE IF EXISTS Password")
 r("CREATE TABLE Password(pwd varchar(50) not null)")
@@ -123,9 +117,11 @@ r('INSERT INTO Password(pwd) VALUES("Pikachu")')
 '''
 pwd = ""
 gospel=hashlib.sha224("okay".encode()).hexdigest()
-
+          #  s384, 'anupam'
 def funcz(func,param):
     return func(param)
+    #return s384('anupam')
+    #return asfsfqwfasd7a8sdfadfja9sdf79q23fhq23fh34r2n3rf3h4
 
 def randomalpha():
     return random.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ")    
@@ -134,19 +130,22 @@ def hash(pp):
     
     d = {1:'s224', 2:'s512', 3:'s384',4:'smd5', 5:'ssha1', 6:'s3_256', 7:'blak_2s', 8:'blak_2b', 9:'s3_384', 10:'s3_512', 11:'s256', 12:'s3_224'}
 
-
     ct = int(r(f'SELECT ctr from Counter').iloc[0,0])  #count of hashing algo
     p=funcz(eval(d[ct]),pp) #Sends to appropriate hashing algo and gets the hashed code
-
+    #p=funcz(s384,'anupam')
+    #p=asfsfqwfasd7a8sdfadfja9sdf79q23fhq23fh34r2n3rf3h4
     if ct==12:
         ct=1
     else:
         ct=ct+1    
 
     r(f'UPDATE Counter SET ctr={ct}') #So that the next algorithm is used the next time
-    _ =randomalpha()
+    _ =randomalpha() #D
+
+    #passp = asfsfqwfasd7a8s + D + * + dfadfja9sdf79q2
     passp = p[0:14] + _ + "*" + p[15:29] #returns hashed value
     return passp
+    #return asfsfqwfasd7a8sD*dfadfja9sdf79q2
 
 def insert_pass(website,choice=2):
     try:
@@ -164,11 +163,12 @@ def insert_pass(website,choice=2):
             for i in range(0,10):
                 n = str(random.randint(1,30))
                 randomlist.append(n)
-            passx=int("".join(randomlist))
-            z=hash(str(passx))
+                #randomlist= [13,1,23,12,31,2,31,2,31,7]
+            passx=int("".join(randomlist)) #1312312312312317
+            z=hash(str(passx)) #asfsfqwfasd7a8sD*dfadfja9sdf79q2 #z = hash('1312312312312317')
         else:
             print("Wrong choice Padawan")    
-        #Finally insert the password    
+        #Finally insert the password                       #youtube    #bce51e50333900N*d7e767ecca7805
         r(f'INSERT into Storage(website,password) VALUES ("{website}","{z}")')
         print("The password has been setup!")
         return z, 2
@@ -261,7 +261,7 @@ def generateOTP():
         
 def SendOTP(otp_generated):
     account_sid = 'AC3a8725c1a7dbfd4e2844003377e02664'
-    auth_token = 'd083bdf2568af152ae1edf565138877f'
+    auth_token = '353677dbf5fdb3964c27113670da96a6'
     client = Client(account_sid, auth_token)
 
     

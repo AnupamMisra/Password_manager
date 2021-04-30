@@ -11,11 +11,11 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Sign Up')
 
 class LoginForm(FlaskForm):
-    password = PasswordField('What was the keyphrase given to you', validators=[DataRequired()])
+    password = PasswordField('You know what to write', validators=[DataRequired()])
     submit = SubmitField('Login')
 
 class Newcredentialssetup(FlaskForm):
-    website = StringField('Website', validators=[DataRequired(), Length(min=2, max=20)])
+    website = StringField('Website name', validators=[DataRequired(), Length(min=2, max=20)])
     submit = SubmitField('Set')   
 
 class Get_passwordform(FlaskForm):
@@ -25,13 +25,13 @@ class Get_passwordform(FlaskForm):
 class reset_credsform(FlaskForm):
 
     answer = StringField('Answer security question', validators=[DataRequired(), Length(min=2, max=200)])
-    otp = IntegerField('Enter OTP', validators=[DataRequired()])
-    website = StringField('Website', validators=[DataRequired(), Length(min=2, max=20)])
+    otp = IntegerField('Enter OTP from your phone', validators=[DataRequired()])
+    website = StringField('Website name', validators=[DataRequired(), Length(min=2, max=20)])
     submit = SubmitField('Reset') 
 
 class securityques(FlaskForm):
     answer = StringField('Answer security question', validators=[DataRequired(), Length(min=2, max=200)])
-    otp = IntegerField('Enter OTP', validators=[DataRequired()])
+    otp = IntegerField('Enter OTP from your phone', validators=[DataRequired()])
     p = PasswordField('New password', validators=[DataRequired()])
     p2 = PasswordField('Confim password', validators=[DataRequired(),EqualTo('p')])
     submit = SubmitField('Enter') 
