@@ -152,7 +152,7 @@ def insert_pass(website,choice=2):
     try:
         if (r(f'select website from Storage where website="{website}"').iloc[0,0]!=""):   
             print("Stop, it already exists")
-
+            return "not okay", 1
     except:
 
         #generate new pass
@@ -171,7 +171,7 @@ def insert_pass(website,choice=2):
         #Finally insert the password    
         r(f'INSERT into Storage(website,password) VALUES ("{website}","{z}")')
         print("The password has been setup!")
-        return z
+        return z, 2
 
 def fetch_pass(websit):
     try:

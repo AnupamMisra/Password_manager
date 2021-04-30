@@ -42,6 +42,8 @@ def login():
     if form.validate_on_submit():
         if backend.check_pwd(form.password.data):
             return redirect(url_for('console'))    
+        else:
+            flash("Thou shalt not pass these gates", "danger")
     return render_template('login.html', title='Login', form=form)
 
 #DONE!!!
@@ -56,8 +58,13 @@ def console():
 def Newcredentials():
     form1 = Newcredentialssetup()
     if form1.validate_on_submit():
-        p = backend.insert_pass(form1.website.data)
-        flash(p,"success")
+        p,status = backend.insert_pass(form1.website.data)
+        
+        if status==1:
+            flash("It already exists!","danger")
+        elif status==2:
+            flash(f"Password generated:{p}", "success")
+
         return redirect(url_for('Newcredentials'))
     return render_template('Newcredentials.html', title='Newcredentials', form=form1)
 
@@ -70,10 +77,10 @@ def Get_password():
         if aa==1:
             print(passs)
             #pc.copy(passs)
-            flash(passs,"success")                #Doesn't work on time
+            flash(f"Here you go:{passs}","success")                #Doesn't work on time
             return redirect(url_for('Get_password'))
         elif aa==2:    
-            flash("Doesn't exist","danger")                #Doesn't work on time
+            flash("Are you sure about the website?","danger")                #Doesn't work on time
             return redirect(url_for('Get_password'))
     return render_template('Get_password.html', title='Get_password', form=form2)
 
@@ -95,14 +102,14 @@ def Reset_credentials():
     print('main reset')
     if form3.validate_on_submit():    
         print('if form validates')
-        print('after form validates and before it goes for checking', backend.counter)
+        print('after form validates and before it goes for checking', backend.oldotp)
         jh=backend.update_pass(form3.answer.data,backend.oldotp,form3.website.data,2,form3.otp.data)
         if jh==1:
             print('if form validates')
-            flash("Resetted","success")
+            flash("Resetted___","success")
         elif jh==0:
             print('if form does not validate')
-            flash("Doesn't exist","danger")
+            flash("Are you trying to trick me?","danger")
         print('inside validate form again' )    
         return redirect(url_for('Reset_credentials'))
         print('after page refreshes')
