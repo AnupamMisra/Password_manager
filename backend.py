@@ -99,6 +99,7 @@ def r(msg):
     else:
         runCMD(msg)
 
+
 '''
 
 r("DROP TABLE IF EXISTS Storage")
@@ -144,7 +145,7 @@ def hash(pp):
     _ =randomalpha() #D
 
     #passp = asfsfqwfasd7a8s + D + * + dfadfja9sdf79q2
-    passp = p[0:16] + _ + "*" + p[15:30] #returns hashed value
+    passp = p[0:15] + _ + "*" + p[15:30] #returns hashed value
     return passp
     #return asfsfqwfasd7a8sD*dfadfja9sdf79q2
 
@@ -275,4 +276,4 @@ def SendOTP(otp_generated):
     message = client.messages.create(body=Message,from_='+16505245430',to=To_number)
 
     print(message.sid)
-                    
+              

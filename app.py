@@ -16,7 +16,6 @@ def set_secure_headers(response):
     sc.flask(response)
     return response
 
-
 @auth.verify_password
 def f(a,b):
     us=hashlib.sha224(a.encode()).hexdigest()
