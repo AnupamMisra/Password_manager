@@ -99,8 +99,8 @@ def r(msg):
     else:
         runCMD(msg)
 
-
 '''
+
 r("DROP TABLE IF EXISTS Storage")
 r("CREATE TABLE Storage( \
 website varchar(70) not null, \
@@ -116,7 +116,7 @@ r('INSERT INTO Password(pwd) VALUES("Pikachu")')
 
 '''
 pwd = ""
-gospel=hashlib.sha224("okay".encode()).hexdigest()
+gospel=hashlib.sha224("master".encode()).hexdigest()
           #  s384, 'anupam'
 def funcz(func,param):
     return func(param)
@@ -124,7 +124,8 @@ def funcz(func,param):
     #return asfsfqwfasd7a8sdfadfja9sdf79q23fhq23fh34r2n3rf3h4
 
 def randomalpha():
-    return random.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ")    
+    return random.choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ") 
+    #return D   
 
 def hash(pp):
     
@@ -143,7 +144,7 @@ def hash(pp):
     _ =randomalpha() #D
 
     #passp = asfsfqwfasd7a8s + D + * + dfadfja9sdf79q2
-    passp = p[0:14] + _ + "*" + p[15:29] #returns hashed value
+    passp = p[0:16] + _ + "*" + p[15:30] #returns hashed value
     return passp
     #return asfsfqwfasd7a8sD*dfadfja9sdf79q2
 
@@ -190,7 +191,7 @@ def update_pass(i,otp,website,choice,otp_generated):
         if(otp == otp_generated):
             print("OTP and OTP generated matches")
             if (r(f'select website from Storage where website="{website}"').iloc[0,0]!=""): 
-                if i=="okay":
+                if i=="forgot":
                     #Send OTP
                     r(f'DELETE FROM Storage where website="{website}"')
                     insert_pass(website)
@@ -198,6 +199,7 @@ def update_pass(i,otp,website,choice,otp_generated):
     except:
         print(f"{website} doesn't exist.")
         return 0                
+
 '''
 def console():
 
@@ -244,6 +246,7 @@ def console():
     else:
         print("Please enter a valid choice") 
     print("_____________________________________________________________________________________________________________________________________________________________________")                                   
+
 '''
 def forgot_passwd(answer, otp, passa,otp_generated):
     #Validate OTP
