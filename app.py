@@ -8,7 +8,8 @@ from flask_sslify import SSLify
 sc=SecureHeaders(csp=True, hsts=True,xfo='Deny')
 auth = HTTPBasicAuth()
 app = Flask(__name__)
-app.secret_key="1234"'
+app.secret_key="1234"
+
 sslify = SSLify(app)
 @app.after_request
 def set_secure_headers(response):
@@ -75,7 +76,7 @@ def Get_password():
         if aa==1:
             print(passs)
             #pc.copy(passs)
-            flash(f"Here you go:{passs}","success")                #Doesn't work on time
+            flash(f"Here you go:  {passs}","success")                #Doesn't work on time
             return redirect(url_for('Get_password'))
         elif aa==2:    
             flash("Are you sure about the website?","danger")                #Doesn't work on time
