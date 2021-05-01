@@ -5,17 +5,16 @@ import backend
 import hashlib
 from flask_httpauth import HTTPBasicAuth
 from flask_sslify import SSLify
-#sc=SecureHeaders(csp=True, hsts=True,xfo='Deny')
+sc=SecureHeaders(csp=True, hsts=True,xfo='Deny')
 auth = HTTPBasicAuth()
 app = Flask(__name__)
-app.secret_key="1234"
-'''
+app.secret_key="1234"'
 sslify = SSLify(app)
 @app.after_request
 def set_secure_headers(response):
     sc.flask(response)
     return response
-'''
+
 
 @auth.verify_password
 def f(a,b):
