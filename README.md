@@ -1,5 +1,5 @@
 # Password_manager
-DSP project for PGPDS at Praxis. I created the backend and the frontend for this project.
+DSP project for PGPDS at Praxis. Except the OTP generation, I did everything in this project.
 
 Features:
 
